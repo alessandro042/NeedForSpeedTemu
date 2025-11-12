@@ -1,73 +1,54 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem; // 1. ¡Importante! Añadimos el nuevo sistema de Input
 
-[RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    // Variables públicas para ajustar en Unity
-    public float moveSpeed = 1500f;
-    public float turnSpeed = 400f;
+    [SerializeField] private Transform[] wheels;
+    [SerializeField] private Transform[] frontWheels;
+    [SerializeField] private float maxSpeed = 20f;
+    [SerializeField] private float steeringSpeed = 45f;
+    [SerializeField] private float wheelRotationSpeed = 360f;
+    private float currentSpeed;
 
-    // Variables privadas
     private Rigidbody rb;
-    private PlayerControls playerControls; // 2. Referencia a nuestro archivo PlayerControls
 
-    // Variables para guardar los valores de input
-    private float horizontalInput; // Para Girar (A/D)
-    private float verticalInput;   // Para Acelerar (W)
-    private float brakeInput;      // Para Frenar (S)
-
-    // Awake() se llama antes que Start()
-    void Awake()
+    private void Awake()
     {
-        // 3. Obtenemos el Rigidbody
         rb = GetComponent<Rigidbody>();
-        
-        // 4. Creamos una NUEVA instancia de nuestros controles
-        playerControls = new PlayerControls();
+        rb.maxLinearVelocity = maxSpeed;
     }
 
-    // 5. Se llama cuando el script se activa
-    void OnEnable()
-    {
-        // Activamos nuestro "mapa de acciones" (el que llamamos "Carrera")
-        playerControls.Race.Enable();
-    }
-
-    // 6. Se llama cuando el script se desactiva
-    void OnDisable()
-    {
-        // Desactivamos el mapa de acciones para evitar problemas
-        playerControls.Race.Disable();
-    }
-
-    // Update() se llama en cada frame
-    
+    // Update is called once per frame
     void Update()
     {
-        // 7. Leemos el valor (float) de cada acción que creamos
-        horizontalInput = playerControls.Race.Girar.ReadValue<float>();
-        verticalInput = playerControls.Race.Acelerar.ReadValue<float>();
-        brakeInput = playerControls.Race.Frenar.ReadValue<float>();
+        if (Input.GetKey(KeyCode.W))
+        {
+            rb.AddForce(transform.forward * (maxSpeed * Time.deltaTime), ForceMode.VelocityChange);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddForce(-transform.forward * (maxSpeed * Time.deltaTime), ForceMode.VelocityChange);
+        }
         
-        Debug.Log("Valor de Giro: " + horizontalInput);
-    }
+        var horizontal = Input.GetAxisRaw("Horizontal");
+        var normalizedSpeed = rb.linearVelocity.magnitude * 2f / rb.maxLinearVelocity;
+        var carRotation = horizontal * steeringSpeed * normalizedSpeed;
+        transform.Rotate(0, carRotation * Time.deltaTime, 0);
 
-    // FixedUpdate() se llama en intervalos de física
-    
-    void FixedUpdate()
-    {
-        // 8. ¡La lógica clave!
-        // Restamos el freno de la aceleración.
-        // - Si presionas W: (1.0 - 0.0) = 1 (Acelera)
-        // - Si presionas S: (0.0 - 1.0) = -1 (Frena/Reversa)
-        // - Si no presionas nada: (0.0 - 0.0) = 0 (Neutral)
-        float combinedMoveInput = verticalInput - brakeInput;
+        foreach (var wheel in wheels)
+        {
+            var degrees = Vector3.Dot(transform.forward * maxSpeed, rb.linearVelocity);
+            
+            wheel.Rotate(degrees * wheelRotationSpeed * Time.deltaTime, 0f, 0f);
+        }
 
-        // 1. Aceleración y Freno/Reversa (aplicado al eje Z local)
-        rb.AddForce(transform.forward * combinedMoveInput * moveSpeed * Time.fixedDeltaTime, ForceMode.Acceleration);
-
-        // 2. Giro (aplicado al eje Y local)
-        rb.AddTorque(transform.up * horizontalInput * turnSpeed * Time.fixedDeltaTime, ForceMode.Acceleration);
+        foreach (var wheel in frontWheels)
+        {
+            var targetRotation = Quaternion.Euler(wheel.localRotation.eulerAngles.x,
+                horizontal * 45f, 
+                wheel.localRotation.eulerAngles.z);
+            wheel.localRotation = Quaternion.Lerp(wheel.localRotation, targetRotation, Time.deltaTime * 5f);
+        }
     }
 }
