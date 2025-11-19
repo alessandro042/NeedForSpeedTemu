@@ -107,3 +107,17 @@ InitTestScene*.unity*
 copilot.data.migration.json
 indexLayout.xml
 vcs.xml
+
+# IDE folders
+/.idea/
+/NFS_TEMU/.idea/
+
+# Ignorar todos los archivos que comiencen con 'TMP'
+TMP*
+
+# Ignorar todos los archivos que comiencen con 'Emoji'
+Emoji*
+
+# Archivos específicos del proyecto que no deben estar en repositorio remoto
+# Configuraciones locales de layouts del editor
+**/UserSettings/Layouts/default-*.dwlt
