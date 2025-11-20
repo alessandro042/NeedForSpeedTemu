@@ -513,7 +513,7 @@ MonoBehaviour:
   frontWheels:
   - {fileID: 932844301}
   - {fileID: 466574751}
-  maxSpeed: 20
+  maxSpeed: 50
   steeringSpeed: 45
   wheelRotationSpeed: 360
 --- !u!54 &1347200859
@@ -551,14 +551,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347200857}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.91857, y: 0.99, z: 5.33}
+  m_LocalRotation: {x: -0, y: 0.4347376, z: -0, w: 0.9005573}
+  m_LocalPosition: {x: 1.9365792, y: 0.99, z: 5.3229213}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 543450651905403389}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 51.537, z: 0}
 --- !u!65 &1347200861
 BoxCollider:
   m_ObjectHideFlags: 0
