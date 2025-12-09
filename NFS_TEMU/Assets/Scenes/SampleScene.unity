@@ -624,7 +624,7 @@ MonoBehaviour:
   frontWheels:
   - {fileID: 932844301}
   - {fileID: 466574751}
-  maxSpeed: 20
+  maxSpeed: 50
   steeringSpeed: 45
   wheelRotationSpeed: 360
 --- !u!54 &1347200859
@@ -669,7 +669,7 @@ Transform:
   m_Children:
   - {fileID: 543450651905403389}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 51.537, z: 0}
 --- !u!65 &1347200861
 BoxCollider:
   m_ObjectHideFlags: 0
