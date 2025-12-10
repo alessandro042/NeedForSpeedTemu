@@ -6,8 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 8048ca08ee65a5348bf5c08cad020ba5
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelector.unity
+    guid: 516524eea906e2b4ab5f0a2dd052eebf
+  - enabled: 1
+    path: Assets/Scenes/TrackMenu.unity
+    guid: afe475ec49cab8d43901490a498cf6fc
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/RaceTrackII.unity
+    guid: 44214e8860e414c47a4aee71599d514a
+  - enabled: 1
+    path: Assets/Scenes/RaceTrackIII.unity
+    guid: c2418fa83786ede438d05ea2a46a2a1d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

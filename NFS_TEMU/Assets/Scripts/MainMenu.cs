@@ -3,26 +3,24 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string gameSceneName = "GameScene";
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void Race()
+    public void CharacterSelector()
     {
-        SceneManager.LoadScene(gameSceneName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
     public void Exit()
     {
+        Debug.Log("Usted ha salido del juego.");
         Application.Quit();
     }
 }

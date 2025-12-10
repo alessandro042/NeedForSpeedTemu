@@ -8,7 +8,7 @@ public class RaceManager : MonoBehaviour
     public Text textoTiempo; 
     public GameObject panelFinal; 
     public Text textoTiempoFinal; 
-    public Text textoMejorTiempo; // Arrastra aquí el texto dorado que acabas de crear
+    public Text textoMejorTiempo; 
 
     [Header("Ruta (Arrastra los Checkpoints en orden)")]
     public List<Checkpoint> checkpoints; 
@@ -19,17 +19,17 @@ public class RaceManager : MonoBehaviour
 
     void Start()
     {
-        // 1. Configurar los checkpoints (Esto ya lo tenías)
+        
         for (int i = 0; i < checkpoints.Count; i++)
         {
             checkpoints[i].raceManager = this;
             checkpoints[i].index = i;
         }
 
-        // 2. Mostrar el récord guardado (ESTA ES LA LÍNEA NUEVA)
+        
         ActualizarMejorTiempoUI(); 
 
-        // 3. Arrancar la carrera
+        
         IniciarCarrera();
     }
 
@@ -57,7 +57,7 @@ public class RaceManager : MonoBehaviour
         if (cp.index == siguienteCheckpoint)
         {
             Debug.Log("Checkpoint " + cp.index + " validado.");
-            siguienteCheckpoint++; // Ahora esperamos el siguiente
+            siguienteCheckpoint++; 
 
             
             if (siguienteCheckpoint >= checkpoints.Count)
@@ -76,21 +76,21 @@ public class RaceManager : MonoBehaviour
     {
         carreraActiva = false;
     
-        // 1. Leemos el récord anterior
+        
         float recordAnterior = PlayerPrefs.GetFloat("MejorTiempo", 99999.0f);
 
-        // 2. Comparamos: ¿El tiempo que acabas de hacer es MENOR (más rápido) que el anterior?
+        
         if (tiempoActual < recordAnterior)
         {
-            // ¡SÍ! Guardamos el nuevo tiempo en la memoria
+            
             PlayerPrefs.SetFloat("MejorTiempo", tiempoActual);
-            PlayerPrefs.Save(); // Confirmamos el guardado
+            PlayerPrefs.Save(); 
         
             Debug.Log("¡NUEVO RÉCORD!");
             if (textoTiempoFinal != null)
                 textoTiempoFinal.text = "¡NUEVO RÉCORD! " + FormatearTiempo(tiempoActual);
             
-            // Actualizamos el texto dorado inmediatamente
+            
             ActualizarMejorTiempoUI();
         }
         else
@@ -120,18 +120,18 @@ public class RaceManager : MonoBehaviour
     
     void ActualizarMejorTiempoUI()
     {
-        // Leemos el tiempo guardado. Si no existe, usamos 9999 (un número muy alto)
+        
         float mejorTiempo = PlayerPrefs.GetFloat("MejorTiempo", 99999.0f);
 
         if (mejorTiempo < 99999.0f)
         {
-            // Si hay un récord real, lo mostramos
+            
             if (textoMejorTiempo != null)
                 textoMejorTiempo.text = "Récord: " + FormatearTiempo(mejorTiempo);
         }
         else
         {
-            // Si es la primera vez que juegas
+            
             if (textoMejorTiempo != null)
                 textoMejorTiempo.text = "Récord: --:--";
         }
